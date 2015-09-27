@@ -42,6 +42,9 @@ public class SimpleExpiryCache<K, V> implements ExpiryCache<K, V> {
 	 * Inserts the expirableKeyValuePair into the priority queue.
 	 * 
 	 * This method doesn't need any additional synchronization apart from that offered by ConcurrentMap and BlockingQueue implementations.
+	 * 
+	 * Time Complexity: O(log(n)), where n = total number of keys in cache
+	 * 					it is the time required to add a value in priorityQueue, assuming it uses a binary heap.
 	 */
 	@Override
 	public void put(K key, V value, int ttl, TimeUnit timeUnit) {
@@ -53,7 +56,9 @@ public class SimpleExpiryCache<K, V> implements ExpiryCache<K, V> {
 	/**
 	 * Get method gets expirable object associated with the given key.
 	 * Checks if it is expired or not.
-	 * returns the wrapped value of expirable. 
+	 * returns the wrapped value of expirable.
+	 * 
+	 * Time Complexity: O(1), non-blocking method.
 	 */
 	@Override
 	public V get(K key) {
